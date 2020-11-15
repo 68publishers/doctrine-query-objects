@@ -1,0 +1,48 @@
+{
+	"name": "68publishers/doctrine-query-objects",
+	"description": "Query objects for Doctrine ORM.",
+	"keywords": ["68publishers", "doctrine", "query", "objects", "nette"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Tomáš Glawaty",
+			"email": "tomasglawaty@icloud.com"
+		}
+	],
+	"require": {
+		"php": "^7.2",
+		"doctrine/orm": "^2.7"
+	},
+	"require-dev": {
+		"friendsofphp/php-cs-fixer": "^2.0",
+		"nette/di": "^3.0.3",
+		"nette/tester": "^2.0",
+		"nette/utils": "^3.0",
+		"roave/security-advisories": "dev-master"
+	},
+	"suggest": {
+		"nette/utils": "If you want to use ResultSet Applicator NettePaginatorApplicator.",
+		"nette/di": "For integration with Nette Framework."
+	},
+	"autoload": {
+		"psr-4": {
+			"SixtyEightPublishers\\DoctrineQueryObjects\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"SixtyEightPublishers\\DoctrineQueryObjects\\Tests\\": "tests/"
+		}
+	},
+	"config": {
+		"sort-packages": true
+	},
+	"scripts": {
+		"tests": [
+			"@tests:lowest",
+			"@tests:highest"
+		],
+		"tests:lowest" : "composer update --no-progress --prefer-dist --prefer-lowest --prefer-stable && composer bin all update --no-progress --prefer-dist --prefer-lowest --prefer-stable && vendor/bin/tester ./tests",
+		"tests:highest" : "composer update --no-progress --prefer-dist --prefer-stable && composer bin all update --no-progress --prefer-dist --prefer-stable && vendor/bin/tester ./tests"
+	}
+}

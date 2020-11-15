@@ -1,0 +1,9 @@
+services:
+	executable_query_object_factory:
+		type: SixtyEightPublishers\DoctrineQueryObjects\ExecutableQueryObjectFactoryInterface
+		factory: SixtyEightPublishers\DoctrineQueryObjects\ExecutableQueryObjectFactory(@extension.query_factory)
+
+	query_factory:
+		autowired: no
+		type: SixtyEightPublishers\DoctrineQueryObjects\QueryFactory\QueryFactoryInterface
+		factory: SixtyEightPublishers\DoctrineQueryObjects\QueryFactory\EntityManagerQueryFactory(@Doctrine\ORM\EntityManagerInterface)
