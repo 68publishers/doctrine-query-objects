@@ -10,13 +10,13 @@
 		}
 	],
 	"require": {
-		"php": "^7.2",
+		"php": "^7.3",
 		"doctrine/orm": "^2.7"
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^2.0",
 		"nette/di": "^3.0.3",
-		"nette/tester": "^2.0",
+		"nette/tester": "^2.3.4",
 		"nette/utils": "^3.0",
 		"roave/security-advisories": "dev-master"
 	},
@@ -42,7 +42,13 @@
 			"@tests:lowest",
 			"@tests:highest"
 		],
-		"tests:lowest" : "composer update --no-progress --prefer-dist --prefer-lowest --prefer-stable && composer bin all update --no-progress --prefer-dist --prefer-lowest --prefer-stable && vendor/bin/tester ./tests",
-		"tests:highest" : "composer update --no-progress --prefer-dist --prefer-stable && composer bin all update --no-progress --prefer-dist --prefer-stable && vendor/bin/tester ./tests"
+		"tests:lowest" : [
+			"@composer update --no-progress --prefer-dist --prefer-lowest --prefer-stable",
+			"vendor/bin/tester ./tests"
+		],
+		"tests:highest" : [
+			"@composer update --no-progress --prefer-dist --prefer-stable",
+			"vendor/bin/tester ./tests"
+		]
 	}
 }
