@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SixtyEightPublishers\DoctrineQueryObjects;
 
-use SixtyEightPublishers\DoctrineQueryObjects\ResultSet\ResultSetOptions;
 use SixtyEightPublishers\DoctrineQueryObjects\QueryFactory\QueryFactoryInterface;
+use SixtyEightPublishers\DoctrineQueryObjects\ResultSet\ResultSetOptionsInterface;
 
 final class ExecutableQueryObjectFactory implements ExecutableQueryObjectFactoryInterface
 {
@@ -23,7 +23,7 @@ final class ExecutableQueryObjectFactory implements ExecutableQueryObjectFactory
 	/**
 	 * {@inheritDoc}
 	 */
-	public function create(QueryObjectInterface $queryObject, ?ResultSetOptions $resultSetOptions = NULL): ExecutableQueryObjectInterface
+	public function create(QueryObjectInterface $queryObject, ?ResultSetOptionsInterface $resultSetOptions = NULL): ExecutableQueryObjectInterface
 	{
 		return new ExecutableQueryObject($queryObject, $this->queryFactory, $resultSetOptions);
 	}

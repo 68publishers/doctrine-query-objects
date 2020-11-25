@@ -98,6 +98,8 @@ final class ExecutableQueryObject implements ExecutableQueryObjectInterface
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @throws \Doctrine\ORM\NonUniqueResultException
 	 */
 	public function fetchOne(): ?object
 	{

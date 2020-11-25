@@ -21,9 +21,7 @@ interface ExecutableQueryObjectInterface
 	public function fetch();
 
 	/**
-	 * @return object|NULL
-	 *
-	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 * @return object|NULL|mixed
 	 */
 	public function fetchOne(): ?object;
 }
