@@ -10,10 +10,18 @@ class ResultSetOptions implements ResultSetOptionsInterface
 {
 	/** @var array  */
 	protected $options = [
-		self::OPTION_HYDRATION_MODE => AbstractQuery::HYDRATE_OBJECT,
+		self::OPTION_HYDRATION_MODE => NULL,
 		self::OPTION_FETCH_JOIN_COLLECTION => FALSE,
 		self::OPTION_USE_OUTPUT_WALKERS => NULL,
 	];
+
+	/**
+	 * @return \SixtyEightPublishers\DoctrineQueryObjects\ResultSet\ResultSetOptions
+	 */
+	public function create(): self
+	{
+		return new static();
+	}
 
 	/**
 	 * {@inheritDoc}

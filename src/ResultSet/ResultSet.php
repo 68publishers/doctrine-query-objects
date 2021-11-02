@@ -137,7 +137,7 @@ class ResultSet implements ResultSetInterface
 		$query = $this->context->getQuery();
 		$options = $this->getOptions();
 
-		$query->setHydrationMode($options->getOption(ResultSetOptionsInterface::OPTION_HYDRATION_MODE, AbstractQuery::HYDRATE_OBJECT));
+		$query->setHydrationMode($options->getOption(ResultSetOptionsInterface::OPTION_HYDRATION_MODE, $query->getHydrationMode()));
 
 		if ($query instanceof Query && $options->getOption(ResultSetOptionsInterface::OPTION_FETCH_JOIN_COLLECTION) && (0 < $query->getMaxResults() || 0 < $query->getFirstResult())) {
 			$iterator = $this->createPaginator($query)->getIterator();

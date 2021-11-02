@@ -89,8 +89,14 @@ final class ExecutableQueryObject implements ExecutableQueryObjectInterface
 				->setMaxResults(NULL);
 		}
 
-		if (NULL !== $this->resultSetOptions && AbstractQuery::HYDRATE_OBJECT !== $this->resultSetOptions->getOption(ResultSetOptionsInterface::OPTION_HYDRATION_MODE, AbstractQuery::HYDRATE_OBJECT)) {
-			return $query->execute(NULL, $this->resultSetOptions->getOption(ResultSetOptionsInterface::OPTION_HYDRATION_MODE));
+		$hydrationMode = $query->getHydrationMode();
+
+		if (NULL !== $this->resultSetOptions) {
+			$hydrationMode = $this->resultSetOptions->getOption(ResultSetOptionsInterface::OPTION_HYDRATION_MODE, $hydrationMode);
+		}
+
+		if (AbstractQuery::HYDRATE_OBJECT !== $hydrationMode) {
+			return $query->execute(NULL, $hydrationMode);
 		}
 
 		return $this->lastResultSet;
@@ -101,7 +107,7 @@ final class ExecutableQueryObject implements ExecutableQueryObjectInterface
 	 *
 	 * @throws \Doctrine\ORM\NonUniqueResultException
 	 */
-	public function fetchOne(): ?object
+	public function fetchOne()
 	{
 		$query = $this->getQuery();
 

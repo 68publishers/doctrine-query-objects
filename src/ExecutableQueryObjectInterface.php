@@ -23,5 +23,5 @@ interface ExecutableQueryObjectInterface
 	/**
 	 * @return object|NULL|mixed
 	 */
-	public function fetchOne(): ?object;
+	public function fetchOne();
 }
