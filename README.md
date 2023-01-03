@@ -1,3 +1,5 @@
+> :warning: Warning! This package does not have active support, it exists only for the historical needs of the author.
+
 # Doctrine Query Objects
 
 Query Objects for Doctrine ORM inspired by implementation in [kdyby/doctrine](https://github.com/Kdyby/Doctrine).
