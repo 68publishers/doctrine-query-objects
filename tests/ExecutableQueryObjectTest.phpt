@@ -9,6 +9,7 @@ use Tester\TestCase;
 use Nette\Utils\Paginator;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\Deprecations\Deprecation;
+use SixtyEightPublishers\DoctrineQueryObjects\Tests\Fixtures\Tag;
 use SixtyEightPublishers\DoctrineQueryObjects\Tests\Fixtures\Article;
 use SixtyEightPublishers\DoctrineQueryObjects\ResultSet\ResultSetOptions;
 use SixtyEightPublishers\DoctrineQueryObjects\ExecutableQueryObjectFactory;
@@ -74,10 +75,13 @@ final class ExecutableQueryObjectTest extends TestCase
 	public function testPagingWithFetchJoinCollection(): void
 	{
 		$options = ResultSetOptions::create()->setFetchJoinCollection(TRUE);
-		$resultSet = $this->factory->create(new ArticlesQuery(), $options)->fetch();
+		$resultSet = $this->factory->create(new ArticlesQuery(NULL, FALSE, TRUE), $options)->fetch();
 		$resultSet->apply(new PagingApplicator(1, 2));
+		$articles = $resultSet->toArray();
 
-		Assert::same([2, 3], $this->ids($resultSet->toArray()));
+		# the limit applies to the articles, not to the joined rows
+		Assert::same([2, 3], $this->ids($articles));
+		Assert::same([[21, 22], [31, 32]], array_map(static fn (Article $article): array => array_map(static fn (Tag $tag): int => $tag->id, $article->tags->toArray()), $articles));
 		Assert::same(5, $resultSet->getTotalCount());
 	}
 

@@ -16,10 +16,14 @@ final class ArticlesQuery extends AbstractQueryObject
 	/** @var bool */
 	private $stringCountQuery;
 
-	public function __construct(?int $minId = NULL, bool $stringCountQuery = FALSE)
+	/** @var bool */
+	private $joinTags;
+
+	public function __construct(?int $minId = NULL, bool $stringCountQuery = FALSE, bool $joinTags = FALSE)
 	{
 		$this->minId = $minId;
 		$this->stringCountQuery = $stringCountQuery;
+		$this->joinTags = $joinTags;
 	}
 
 	/**
@@ -31,6 +35,10 @@ final class ArticlesQuery extends AbstractQueryObject
 			->select('a')
 			->from(Article::class, 'a')
 			->orderBy('a.id');
+
+		if ($this->joinTags) {
+			$qb->leftJoin('a.tags', 't')->addSelect('t')->addOrderBy('t.id');
+		}
 
 		if (NULL !== $this->minId) {
 			$qb->andWhere('a.id >= :minId')->setParameter('minId', $this->minId);

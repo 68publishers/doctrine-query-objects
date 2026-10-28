@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added Nette Tester tests (SQLite in memory) and GitHub Actions (coding style, tests on PHP 8.3, 8.4 and 8.5 with the lowest and highest dependencies).
+- Added Nette Tester tests (SQLite in memory) and GitHub Actions (coding style, tests on PHP 8.3, 8.4 and 8.5 with the highest dependencies and on PHP 8.3 with the lowest dependencies).
 
 ### Changed
 

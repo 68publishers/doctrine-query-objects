@@ -14,7 +14,7 @@ use Doctrine\Persistence\Mapping\Driver\StaticPHPDriver;
 final class EntityManagerFactory
 {
 	/**
-	 * Creates the in-memory SQLite database with articles #1 - #5
+	 * Creates the in-memory SQLite database with articles #1 - #5, every article has two tags
 	 */
 	public static function create(): EntityManagerInterface
 	{
@@ -31,10 +31,13 @@ final class EntityManagerFactory
 		$connection = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'memory' => TRUE]);
 		$em = method_exists(EntityManager::class, 'create') ? EntityManager::create($connection, $config) : new EntityManager($connection, $config);
 
-		(new SchemaTool($em))->createSchema([$em->getClassMetadata(Article::class)]);
+		(new SchemaTool($em))->createSchema([$em->getClassMetadata(Article::class), $em->getClassMetadata(Tag::class)]);
 
 		for ($i = 1; $i <= 5; $i++) {
-			$em->persist(new Article($i, 'Article ' . $i));
+			$article = new Article($i, 'Article ' . $i);
+			$em->persist($article);
+			$em->persist(new Tag($i * 10 + 1, $article));
+			$em->persist(new Tag($i * 10 + 2, $article));
 		}
 
 		$em->flush();
