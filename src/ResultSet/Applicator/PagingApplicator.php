@@ -32,9 +32,10 @@ final class PagingApplicator implements ApplicatorInterface
 	public function __invoke(ResultSetInterface $resultSet, ResultSetContextInterface $context): void
 	{
 		$query = $context->getQuery();
+		$offset = $this->offset ?? 0;
 
-		if ($query instanceof Query && ($query->getFirstResult() !== $this->offset || $query->getMaxResults() !== $this->limit)) {
-			$query->setFirstResult($this->offset);
+		if ($query instanceof Query && ($query->getFirstResult() !== $offset || $query->getMaxResults() !== $this->limit)) {
+			$query->setFirstResult($offset);
 			$query->setMaxResults($this->limit);
 			$context->setIterator(NULL);
 		}

@@ -55,7 +55,7 @@ final class ExecutableQueryObject implements ExecutableQueryObjectInterface
 		$query = $this->queryObject->createCountQuery($this->queryFactory);
 
 		if (NULL !== $query) {
-			return $this->toQuery($query)->getSingleScalarResult();
+			return (int) $this->toQuery($query)->getSingleScalarResult();
 		}
 
 		if (NULL !== $paginator) {
@@ -68,7 +68,7 @@ final class ExecutableQueryObject implements ExecutableQueryObjectInterface
 			throw UnsupportedFeatureException::unsupportedQueryPaginator($query);
 		}
 
-		$query->setFirstResult(NULL)
+		$query->setFirstResult(0)
 			->setMaxResults(NULL);
 
 		$paginator = new Paginator($query, NULL !== $this->resultSetOptions ? $this->resultSetOptions->getOption(ResultSetOptionsInterface::OPTION_FETCH_JOIN_COLLECTION) : TRUE);
@@ -85,7 +85,7 @@ final class ExecutableQueryObject implements ExecutableQueryObjectInterface
 		$query = $this->getQuery();
 
 		if ($query instanceof Query) {
-			$query->setFirstResult(NULL)
+			$query->setFirstResult(0)
 				->setMaxResults(NULL);
 		}
 
@@ -112,7 +112,7 @@ final class ExecutableQueryObject implements ExecutableQueryObjectInterface
 		$query = $this->getQuery();
 
 		if ($query instanceof Query) {
-			$query->setFirstResult(NULL)
+			$query->setFirstResult(0)
 				->setMaxResults(1);
 		}
 

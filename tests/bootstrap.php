@@ -16,3 +16,8 @@ if (!defined('TEMP_PATH')) {
 if (!defined('CONFIG_DIR')) {
 	define('CONFIG_DIR', __DIR__ . '/config');
 }
+
+# The lowest versions of some third-party dependencies trigger deprecations on newer PHP versions (used by CI only)
+if (getenv('TESTS_IGNORE_DEPRECATIONS')) {
+	error_reporting(E_ALL & ~E_DEPRECATED);
+}

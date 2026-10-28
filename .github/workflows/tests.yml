@@ -1,0 +1,52 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Unit Tests [PHP ${{ matrix.php-versions }}]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['8.3', '8.4', '8.5']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: pdo_sqlite
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer update --no-progress --prefer-dist --prefer-stable --optimize-autoloader --quiet
+
+      - name: Run tests
+        run: vendor/bin/tester -C -s ./tests
+
+      # the lowest third-party versions predate PHP 8.4 and 8.5 and trigger deprecations there, the lowest dependencies are tested on the minimal PHP
+      - name: Install dependencies (lowest)
+        if: matrix.php-versions == '8.3'
+        run: composer update --no-progress --prefer-dist --prefer-lowest --prefer-stable --optimize-autoloader --quiet
+
+      - name: Run tests (lowest)
+        if: matrix.php-versions == '8.3'
+        # the lowest third-party versions (doctrine/persistence, doctrine/dbal) trigger deprecations, they are verified by the highest run
+        env:
+          TESTS_IGNORE_DEPRECATIONS: 1
+        run: vendor/bin/tester -C -s ./tests
