@@ -18,7 +18,7 @@ class ResultSetOptions implements ResultSetOptionsInterface
 	/**
 	 * @return \SixtyEightPublishers\DoctrineQueryObjects\ResultSet\ResultSetOptions
 	 */
-	public function create(): self
+	public static function create(): self
 	{
 		return new static();
 	}
